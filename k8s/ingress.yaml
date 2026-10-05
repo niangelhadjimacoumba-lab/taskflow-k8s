@@ -1,0 +1,33 @@
+# Necessite l'ingress controller nginx :
+#   minikube addons enable ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: taskflow-ingress
+  namespace: taskflow
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: taskflow.local
+      http:
+        paths:
+          - path: /api/auth(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: auth-service
+                port: { number: 8000 }
+          - path: /api/tasks(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: tasks-service
+                port: { number: 8000 }
+          - path: /api/notifications(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: notifications-service
+                port: { number: 8000 }
