@@ -1,0 +1,49 @@
+# Usage local (sans Kubernetes) pour developper/tester rapidement les 3 services ensemble.
+# Pour le deploiement "production-like", voir le dossier k8s/.
+
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  auth-service:
+    build: ./services/auth-service
+    ports:
+      - "8001:8000"
+    restart: unless-stopped
+    environment:
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-dev-secret-change-me}
+      DATABASE_URL: sqlite:///./auth.db
+
+  tasks-service:
+    build: ./services/tasks-service
+    ports:
+      - "8002:8000"
+    restart: unless-stopped
+    environment:
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-dev-secret-change-me}
+      DATABASE_URL: sqlite:///./tasks.db
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  notifications-service:
+    build: ./services/notifications-service
+    ports:
+      - "8003:8000"
+    restart: unless-stopped
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+    depends_on:
+      redis:
+        condition: service_healthy
