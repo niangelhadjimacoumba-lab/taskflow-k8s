@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: auth-service
-          image: ghcr.io/macoumba18/taskflow-auth-service:latest
+          image: ghcr.io/niangelhadjimacoumba-lab/taskflow-auth-service:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000

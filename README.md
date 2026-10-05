@@ -105,9 +105,9 @@ minikube addons enable ingress
 
 # Construire les images directement dans le registre Docker de Minikube
 eval $(minikube docker-env)
-docker build -t ghcr.io/macoumba18/taskflow-auth-service:latest services/auth-service
-docker build -t ghcr.io/macoumba18/taskflow-tasks-service:latest services/tasks-service
-docker build -t ghcr.io/macoumba18/taskflow-notifications-service:latest services/notifications-service
+docker build -t ghcr.io/niangelhadjimacoumba-lab/taskflow-auth-service:latest services/auth-service
+docker build -t ghcr.io/niangelhadjimacoumba-lab/taskflow-tasks-service:latest services/tasks-service
+docker build -t ghcr.io/niangelhadjimacoumba-lab/taskflow-notifications-service:latest services/notifications-service
 
 # Déployer
 kubectl apply -f k8s/namespace.yaml

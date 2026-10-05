@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: tasks-service
-          image: ghcr.io/macoumba18/taskflow-tasks-service:latest
+          image: ghcr.io/niangelhadjimacoumba-lab/taskflow-tasks-service:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000

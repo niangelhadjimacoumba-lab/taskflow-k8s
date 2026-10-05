@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: notifications-service
-          image: ghcr.io/macoumba18/taskflow-notifications-service:latest
+          image: ghcr.io/niangelhadjimacoumba-lab/taskflow-notifications-service:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
